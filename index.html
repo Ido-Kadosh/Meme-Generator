@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="css/style.css" />
+		<script src="https://kit.fontawesome.com/04813fd099.js" crossorigin="anonymous"></script>
 		<title>Meme Generator</title>
 	</head>
 	<body onload="onInit()">
@@ -49,6 +50,57 @@
 				<canvas class="meme-editor-canvas" height="500" , width="500"></canvas>
 				<section class="editor-tools">
 					<input type="text" placeholder="Add Text Here" oninput="onAddTxt(this)" />
+					<div class="input-editors-container">
+						<button class="btn-editor btn-switch-inputs">
+							<i class="fa-solid fa-arrow-up-long"></i>
+							<i class="fa-solid fa-arrow-down-long"></i>
+						</button>
+						<button class="btn-editor btn-add-input">
+							<i class="fa-solid fa-plus"></i>
+						</button>
+						<button class="btn-editor btn-delete-input">
+							<i class="fa-solid fa-trash"></i>
+						</button>
+					</div>
+
+					<div class="font-editors-container">
+						<button class="btn-font" onclick="onUpdateFont(1)"><i class="fa-solid fa-font"></i> +</button>
+						<button class="btn-font" onclick="onUpdateFont(-1)"><i class="fa-solid fa-font"></i> -</button>
+						<button class="btn-font" onclick="onSetAlignment('left')">
+							<i class="fa-solid fa-align-left"></i>
+						</button>
+						<button class="btn-font" onclick="onSetAlignment('center')">
+							<i class="fa-solid fa-align-center"></i>
+						</button>
+						<button class="btn-font" onclick="onSetAlignment('right')">
+							<i class="fa-solid fa-align-right"></i>
+						</button>
+						<select onchange="onSetFont(this)">
+							<option value="impact">Impact</option>
+							<option value="arial">Arial</option>
+							<option value="verdana">Verdana</option>
+							<option value="tahoma">Tahoma</option>
+							<option value="trebuchet ms">Trebuchet MS</option>
+							<option value="times new roman">Times New Roman</option>
+							<option value="georgia">Georgia</option>
+							<option value="garamond">Garamond</option>
+							<option value="courier new">Courier New</option>
+							<option value="brush script mt">Brush Script MT</option>
+						</select>
+						<button class="btn-font stroke-color-picker color-picker fa-solid fa-brush">
+							<input type="color" class="btn-font" oninput="onSetStrokeStyle(this)"></input>
+						</button>
+						<button class="btn-font fill-color-picker color-picker fa-solid fa-fill-drip">
+							<input type="color" class="btn-font" oninput="onSetFillStyle(this)"></input>
+						</button>
+						
+					</div>
+					<div class="sticker-container"></div>
+					<div class="save-container">
+						<button>save</button>
+						<button>share</button>
+						<button>download</button>
+					</div>
 				</section>
 			</main>
 		</section>
@@ -66,7 +118,7 @@
 			</header>
 		</section>
 		<script src="js/gallery.controller.js"></script>
-		<script src="js/meme.controller.js"></script>
+		<script src="js/editor.controller.js"></script>
 		<script src="js/services/util.service.js"></script>
 		<script src="js/services/storage.service.js"></script>
 		<script src="js/services/meme.service.js"></script>

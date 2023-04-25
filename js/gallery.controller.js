@@ -20,6 +20,6 @@ function renderGallery() {
 function onMemePicked(el) {
 	document.querySelector('.meme-gallery-page').hidden = true;
 	document.querySelector('.meme-editor-page').hidden = false;
-	initializeEmptyMeme(el);
+	setMeme(el);
 	openMemeEditor();
 }
