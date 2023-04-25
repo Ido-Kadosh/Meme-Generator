@@ -1,0 +1,22 @@
+.meme-editor-page main {
+	display: flex;
+	gap: 50px;
+	justify-content: center;
+}
+
+.editor-tools {
+	background-color: #383b42;
+	border-radius: 1.875em;
+}
+
+.editor-tools input {
+	background-color: #ebeef3;
+	border-radius: 1.75rem;
+	border: none;
+	margin-block-start: 50px;
+	box-shadow: 1px 5px 0 #bbc4d1, inset 0 5px 0 #ffffff;
+}
+
+.editor-tools input:focus {
+	outline: 1px solid blue;
+}

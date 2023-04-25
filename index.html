@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/style.css" />
+		<title>Meme Generator</title>
+	</head>
+	<body onload="onInit()">
+		<section class="meme-gallery-page">
+			<header class="main-header">
+				<h2>Meme Generator</h2>
+				<nav>
+					<ul>
+						<li>Gallery</li>
+						<li>Saved</li>
+						<li>Randomize</li>
+					</ul>
+				</nav>
+			</header>
+			<main>
+				<section class="filter-search-section">
+					<input type="text" class="search-meme-input" placeholder="search" />
+					<div class="key-words-container">
+						<button class="keyword keyword1">Happy</button>
+						<button class="keyword keyword2">Sad</button>
+						<button class="keyword keyword3">Crazy</button>
+						<button class="keyword keyword4">Sarcastic</button>
+						<button class="keyword keyword5">Funny</button>
+					</div>
+				</section>
+				<section class="memes-grid-container"></section>
+			</main>
+		</section>
+
+		<section class="meme-editor-page" hidden>
+			<header class="main-header">
+				<h2>Meme Generator</h2>
+				<nav>
+					<ul>
+						<li>Gallery</li>
+						<li>Saved</li>
+						<li>Randomize</li>
+					</ul>
+				</nav>
+			</header>
+			<main>
+				<canvas class="meme-editor-canvas" height="500" , width="500"></canvas>
+				<section class="editor-tools">
+					<input type="text" placeholder="Add Text Here" oninput="onAddTxt(this)" />
+				</section>
+			</main>
+		</section>
+
+		<section class="meme-saved-page" hidden>
+			<header class="main-header">
+				<h2>Meme Generator</h2>
+				<nav>
+					<ul>
+						<li>Gallery</li>
+						<li>Saved</li>
+						<li>Randomize</li>
+					</ul>
+				</nav>
+			</header>
+		</section>
+		<script src="js/gallery.controller.js"></script>
+		<script src="js/meme.controller.js"></script>
+		<script src="js/services/util.service.js"></script>
+		<script src="js/services/storage.service.js"></script>
+		<script src="js/services/meme.service.js"></script>
+	</body>
+</html>

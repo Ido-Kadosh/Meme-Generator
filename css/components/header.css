@@ -1,0 +1,30 @@
+.main-header {
+	display: flex;
+	margin: auto;
+	justify-content: space-between;
+	max-width: var(--meme-container-width);
+	height: 73px;
+	border-radius: 37px;
+	background-color: #5970c1;
+	background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+}
+
+.main-header h2 {
+	min-width: max-content;
+}
+
+.main-header nav {
+	margin-block: auto;
+}
+
+.main-header ul {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	list-style: none;
+}
+
+.main-header ul,
+.main-header h2 {
+	padding-inline: 50px;
+}
