@@ -1,0 +1,71 @@
+/* SAVE CONTAINER */
+.save-container {
+	display: flex;
+	flex-direction: column;
+	height: 50px;
+	font-size: 1.5rem;
+	width: 80%;
+	justify-content: center;
+}
+
+@media screen and (min-width: 630px) {
+	.save-container {
+		flex-direction: row;
+	}
+}
+
+.save-container .btn {
+	margin-inline: 5px;
+	padding-inline: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+	text-decoration: none;
+	border-radius: 15px;
+	color: white;
+}
+
+@media screen and (min-width: 1300px) {
+	.save-container .btn {
+		margin-inline: 20px;
+	}
+}
+
+/* SAVE BUTTONS */
+.save-container .btn-save {
+	box-shadow: 1px 6px 0 #165b9c, inset 0 5px 0 #63a8e9;
+	background-color: #2083df;
+}
+
+.save-container .btn-share {
+	box-shadow: 1px 6px 0 #318164, inset 0 5px 0 #7eceb0;
+	background-color: #46b98f;
+}
+
+.save-container .btn-download {
+	box-shadow: 1px 6px 0 #6b169c, inset 0 5px 0 #b863e9;
+	background-color: #9920df;
+}
+
+/* SAVE ICONS */
+.save-container .btn-save::before {
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	content: '\f019';
+	padding-inline-end: 20px;
+}
+
+.save-container .btn-share::before {
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	content: '\f064';
+	padding-inline-end: 20px;
+}
+
+.save-container .btn-download::before {
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	content: '\f0c7';
+	padding-inline-end: 20px;
+}

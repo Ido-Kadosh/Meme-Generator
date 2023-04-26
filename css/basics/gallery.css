@@ -2,19 +2,26 @@
 	background-color: var(--primary-color-2);
 	border-radius: 0.625rem;
 	margin-inline: 25px;
-	max-width: calc(var(--meme-container-width) + 50px);
-	margin: auto;
+	max-width: calc(var(--m-meme-container) + 50px);
+	margin: 20px auto;
+}
+
+@media screen and (min-width: 1300px) {
+	.meme-gallery-page main {
+		max-width: var(--l-meme-container);
+	}
 }
 
 .memes-grid-container {
-	max-width: var(--meme-container-width);
+	max-width: var(--l-meme-container);
 	overflow-y: scroll;
-	height: 90vh;
+	height: 80vh;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 20px;
 	align-items: center;
 	margin: auto;
+	padding-inline: 50px;
 }
 
 .memes-grid-container .img-container {
@@ -26,12 +33,57 @@
 }
 
 .filter-search-section {
+	padding-block: 20px;
+	padding-inline: 20px;
+	font-size: 1rem;
 	display: flex;
+	flex-direction: column;
 }
 
-.filter-search-section > .search-meme-input {
-	flex-grow: 1;
+.filter-search-section > .input-icon-container {
+	position: relative;
+	flex: 1;
 }
+
+.filter-search-section .search-meme-input {
+	color: white;
+	padding-inline-start: 2em;
+	width: 100%;
+	height: 58px;
+	border-radius: 29px;
+	border: none;
+	background-color: var(--primary-color-1);
+	font-size: 1.3125em;
+}
+
+.filter-search-section i.fa-magnifying-glass {
+	display: inline;
+	position: absolute;
+	font-size: 2em;
+	background: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	height: 30px;
+	width: 30px;
+	right: 5%;
+	top: 25%;
+}
+
 .filter-search-section > .key-words-container {
-	flex-grow: 1;
+	flex: 1;
+	text-align: center;
+	align-self: center;
+}
+
+.key-words-container > button {
+	border: none;
+	background-color: inherit;
+	color: white;
+}
+
+@media screen and (min-width: 1300px) {
+	.filter-search-section {
+		flex-direction: row;
+	}
 }

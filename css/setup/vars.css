@@ -4,6 +4,8 @@
 	--primary-color-2: #383b42;
 
 	/* SIZES */
-	--meme-container-width: 1250px;
-	--editor-button-size: 55px;
+	--header-height: 73px;
+	--l-meme-container: 1250px;
+	--m-meme-container: 800px;
+	--editor-button-size: 2.45em;
 }

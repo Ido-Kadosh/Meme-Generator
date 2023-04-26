@@ -9,63 +9,77 @@
 		<title>Meme Generator</title>
 	</head>
 	<body onload="onInit()">
+		<div class="main-screen" onclick="onToggleNavOpen()"></div>
 		<section class="meme-gallery-page">
 			<header class="main-header">
 				<h2>Meme Generator</h2>
 				<nav>
 					<ul>
-						<li>Gallery</li>
-						<li>Saved</li>
-						<li>Randomize</li>
+						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
+						<li><button class="nav-button">Saved</button></li>
+						<li><button class="nav-button">Randomize</button></li>
 					</ul>
 				</nav>
+				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
 			</header>
 			<main>
 				<section class="filter-search-section">
-					<input type="text" class="search-meme-input" placeholder="search" />
+					<div class="input-icon-container">
+						<input list="meme-types" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this)" />
+						<datalist id="meme-types">
+							<option value="Funny"></option>
+							<option value="Cat"></option>
+							<option value="Smart"></option>
+							<option value="Office"></option>
+							<option value="Microsoft Edge"></option>
+						  </datalist>
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</div>
+
 					<div class="key-words-container">
-						<button class="keyword keyword1">Happy</button>
-						<button class="keyword keyword2">Sad</button>
-						<button class="keyword keyword3">Crazy</button>
-						<button class="keyword keyword4">Sarcastic</button>
-						<button class="keyword keyword5">Funny</button>
+						<button onclick="onSearchMeme(this)" value="happy" class="keyword keyword1">Happy</button>
+						<button onclick="onSearchMeme(this)" value="sad" class="keyword keyword2">Sad</button>
+						<button onclick="onSearchMeme(this)" value="crazy" class="keyword keyword3">Crazy</button>
+						<button onclick="onSearchMeme(this)" value="sarcastic" class="keyword keyword4">Sarcastic</button>
+						<button onclick="onSearchMeme(this)" value="funny" class="keyword keyword5">Funny</button>
 					</div>
 				</section>
 				<section class="memes-grid-container"></section>
 			</main>
 		</section>
 
-		<section class="meme-editor-page" hidden>
+		<section class="meme-editor-page hidden">
 			<header class="main-header">
 				<h2>Meme Generator</h2>
 				<nav>
 					<ul>
-						<li>Gallery</li>
-						<li>Saved</li>
-						<li>Randomize</li>
+						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
+						<li><button class="nav-button">Saved</button></li>
+						<li><button class="nav-button">Randomize</button></li>
 					</ul>
 				</nav>
+				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
 			</header>
 			<main>
-				<canvas class="meme-editor-canvas" height="500" , width="500"></canvas>
+				<canvas class="meme-editor-canvas"></canvas>
 				<section class="editor-tools">
 					<input type="text" placeholder="Add Text Here" oninput="onAddTxt(this)" />
 					<div class="input-editors-container">
-						<button class="btn-editor btn-switch-inputs">
+						<button onclick="onSwitchLine()" class="btn-editor btn-switch-inputs">
 							<i class="fa-solid fa-arrow-up-long"></i>
 							<i class="fa-solid fa-arrow-down-long"></i>
 						</button>
-						<button class="btn-editor btn-add-input">
+						<button onclick="onAddLine()" class="btn-editor btn-add-input">
 							<i class="fa-solid fa-plus"></i>
 						</button>
-						<button class="btn-editor btn-delete-input">
+						<button onclick="onDeleteLine()" class="btn-editor btn-delete-input">
 							<i class="fa-solid fa-trash"></i>
 						</button>
 					</div>
 
 					<div class="font-editors-container">
-						<button class="btn-font" onclick="onUpdateFont(1)"><i class="fa-solid fa-font"></i> +</button>
-						<button class="btn-font" onclick="onUpdateFont(-1)"><i class="fa-solid fa-font"></i> -</button>
+						<button class="btn-font" onclick="onUpdateLineSize(1)"><i class="fa-solid fa-font"></i> +</button>
+						<button class="btn-font" onclick="onUpdateLineSize(-1)"><i class="fa-solid fa-font"></i> -</button>
 						<button class="btn-font" onclick="onSetAlignment('left')">
 							<i class="fa-solid fa-align-left"></i>
 						</button>
@@ -97,24 +111,25 @@
 					</div>
 					<div class="sticker-container"></div>
 					<div class="save-container">
-						<button>save</button>
-						<button>share</button>
-						<button>download</button>
+						<a href="#" class="btn btn-save" onclick="onSaveMeme()">save</a>
+						<a href="#" class="btn btn-share" onclick="onShareMeme()">share</a>
+						<a href="#" class="btn btn-download" onclick="onDownloadMeme(this)">download</a>
 					</div>
 				</section>
 			</main>
 		</section>
 
-		<section class="meme-saved-page" hidden>
+		<section class="meme-saved-page hidden">
 			<header class="main-header">
 				<h2>Meme Generator</h2>
 				<nav>
 					<ul>
-						<li>Gallery</li>
-						<li>Saved</li>
-						<li>Randomize</li>
+						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
+						<li><button class="nav-button">Saved</button></li>
+						<li><button class="nav-button">Randomize</button></li>
 					</ul>
 				</nav>
+				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
 			</header>
 		</section>
 		<script src="js/gallery.controller.js"></script>

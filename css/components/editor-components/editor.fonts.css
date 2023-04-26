@@ -1,0 +1,41 @@
+/* FONT BUTTONS */
+.font-editors-container {
+	font-size: 1.4rem;
+	display: grid;
+	gap: calc(var(--editor-button-size) / 2);
+	grid-template-columns: repeat(5, 1fr);
+	background-color: #19a59f;
+	border-radius: 15px;
+	padding: 20px;
+}
+
+.font-editors-container select {
+	grid-column: 1/4;
+	height: var(--editor-button-size);
+	font-size: 1em;
+	color: black;
+	border: none;
+	border-radius: 10px;
+}
+
+.font-editors-container .btn-font {
+	width: var(--editor-button-size);
+	height: var(--editor-button-size);
+	font-size: 1em;
+	color: black;
+	border: none;
+	border-radius: 10px;
+}
+
+/* FONT COLOR BUTTONS  */
+.font-editors-container .color-picker {
+	position: relative;
+}
+
+.font-editors-container input[type='color'] {
+	cursor: pointer;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
