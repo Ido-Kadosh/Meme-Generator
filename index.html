@@ -10,13 +10,17 @@
 	</head>
 	<body onload="onInit()">
 		<div class="main-screen" onclick="onToggleNavOpen()"></div>
+		<select class="language-select" onchange="onSetLang(this.value)">
+			<option value="en">English</option>
+			<option value="he">עברית</option>
+		</select>
 		<header class="main-header">
-			<h2>Meme Generator</h2>
+			<h2 data-trans="meme-generator">Meme Generator</h2>
 			<nav>
 				<ul>
-					<li><button class="nav-button" onclick="onInit();">Gallery</button></li>
-					<li><button class="nav-button" onclick="onSavedClicked();">Saved</button></li>
-					<li><button class="nav-button" onclick="onRandomClicked();">Randomize</button></li>
+					<li><button class="nav-button" data-trans="gallery" onclick="onInit();">Gallery</button></li>
+					<li><button class="nav-button" data-trans="saved" onclick="onSavedClicked();">Saved</button></li>
+					<li><button class="nav-button" data-trans="randomize" onclick="onRandomClicked();">Randomize</button></li>
 				</ul>
 			</nav>
 			<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
@@ -26,7 +30,7 @@
 			<main>
 				<section class="filter-search-section">
 					<div class="input-icon-container">
-						<input list="meme-types" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this.value)" />
+						<input list="meme-types" data-trans="search" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this.value)" />
 						<datalist id="meme-types">
 							<option value="Funny"></option>
 							<option value="Cat"></option>
@@ -38,11 +42,11 @@
 					</div>
 
 					<div class="key-words-container">
-						<button onclick="onKeywordPressed(this.value)" value="happy" class="keyword keyword1">Happy</button>
-						<button onclick="onKeywordPressed(this.value)" value="sad" class="keyword keyword2">Sad</button>
-						<button onclick="onKeywordPressed(this.value)" value="crazy" class="keyword keyword3">Crazy</button>
-						<button onclick="onKeywordPressed(this.value)" value="sarcastic" class="keyword keyword4">Sarcastic</button>
-						<button onclick="onKeywordPressed(this.value)" value="funny" class="keyword keyword5">Funny</button>
+						<button onclick="onKeywordPressed(this.value)" data-trans="happy" value="happy" class="keyword keyword1">Happy</button>
+						<button onclick="onKeywordPressed(this.value)" data-trans="sad" value="sad" class="keyword keyword2">Sad</button>
+						<button onclick="onKeywordPressed(this.value)" data-trans="crazy" value="crazy" class="keyword keyword3">Crazy</button>
+						<button onclick="onKeywordPressed(this.value)" data-trans="sarcastic" value="sarcastic" class="keyword keyword4">Sarcastic</button>
+						<button onclick="onKeywordPressed(this.value)" data-trans="funny" value="funny" class="keyword keyword5">Funny</button>
 					</div>
 				</section>
 				<section class="memes-grid-container"></section>
@@ -51,9 +55,9 @@
 
 		<section class="meme-editor-page hidden">
 			<main>
-				<canvas class="meme-editor-canvas"></canvas>
+				<canvas tabindex="1" class="meme-editor-canvas"></canvas>
 				<section class="editor-tools">
-					<input type="text" class="meme-text-input" placeholder="Add Text Here" oninput="onAddTxt(this)" />
+					<input type="text" data-trans="add-text-here" class="meme-text-input" placeholder="Add Text Here" oninput="onAddTxt(this)" />
 					<div class="input-editors-container">
 						<button onclick="onSwitchLine()" class="btn-editor btn-switch-inputs">
 							<i class="fa-solid fa-arrow-up-long"></i>
@@ -91,9 +95,9 @@
 					</div>
 					<div class="sticker-container"></div>
 					<div class="save-container">
-						<a href="#" class="btn btn-save" onclick="onSaveMeme()">save</a>
-						<a href="#" class="btn btn-share" onclick="onShareMeme()">share</a>
-						<a href="#" class="btn btn-download" onclick="onDownloadMeme(this)">download</a>
+						<a href="#" data-trans="save" class="btn btn-save" onclick="onSaveMeme()">save</a>
+						<a href="#" data-trans="share" class="btn btn-share" onclick="onShareMeme()">share</a>
+						<a href="#" data-trans="download" class="btn btn-download" onclick="onDownloadMeme(this)">download</a>
 					</div>
 				</section>
 			</main>
@@ -107,6 +111,7 @@
 		</section>
 		<script src="js/services/util.service.js"></script>
 		<script src="js/services/storage.service.js"></script>
+		<script src="js/services/i18n.service.js"></script>
 		<script src="js/services/meme.service.js"></script>
 		<script src="js/gallery.controller.js"></script>
 		<script src="js/editor.controller.js"></script>

@@ -11,6 +11,10 @@
 	max-height: calc(100vh - 50px - 10px - (var(--header-height)));
 }
 
+canvas:focus {
+	outline: none;
+}
+
 @media screen and (min-width: 810px) {
 	.meme-editor-page main {
 		margin: 50px auto;

@@ -40,12 +40,21 @@
 	transition: transform 0.6s;
 }
 
+@media screen and (max-width: 810px) {
+	body.rtl .main-header ul {
+		right: auto;
+		left: 0;
+		transform: translateX(-100%);
+	}
+}
+
 .main-header li {
 	display: flex;
 	justify-content: center;
 	width: 100%;
 	border-block-end: 1px solid rgba(0, 0, 0, 0.247);
 	height: 100px;
+	min-width: max-content;
 }
 
 body.nav-open .main-header ul {
@@ -64,6 +73,11 @@ body.nav-open .main-header ul {
 	top: 50%;
 	right: 10%;
 	transform: translate(50%, -50%);
+}
+
+body.rtl .main-header .nav-hamburger {
+	left: 10%;
+	right: auto;
 }
 
 @media screen and (min-width: 500px) {

@@ -40,6 +40,7 @@ function addCanvasEventListeners() {
 	gElCanvas.addEventListener('touchstart', onDown);
 	gElCanvas.addEventListener('touchmove', onMove);
 	gElCanvas.addEventListener('touchend', onUp);
+	gElCanvas.addEventListener('keydown', onKeyPressed);
 
 	// this prevents dragging when mouseup fires after
 	document.addEventListener('mousedown', () => (gIsMouseDown = true));
@@ -300,5 +301,10 @@ function drawOutlineRectangle(line) {
 function onResizeCanvas() {
 	//if screen is smaller than default width, we make canvas smaller.
 	gCanvasWidth = Math.min(window.innerWidth, DEFAULT_CANVAS_WIDTH);
+	renderImage();
+}
+
+function onKeyPressed(ev) {
+	appendLineTxt(ev.key);
 	renderImage();
 }

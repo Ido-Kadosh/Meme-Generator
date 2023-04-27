@@ -9,6 +9,10 @@ body {
 	overflow: hidden;
 }
 
+body.rtl {
+	direction: rtl;
+}
+
 html {
 	font-family: 'Poppins', sans-serif;
 }

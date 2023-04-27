@@ -25,6 +25,7 @@ function renderGallery(filter) {
 	const elGallery = document.querySelector('.memes-grid-container');
 	elGallery.innerHTML = strHTML;
 	gGalleryRendered = true;
+	doTrans();
 }
 
 function onMemePicked(elImg, random = false) {
@@ -76,7 +77,7 @@ function renderKeywordSize() {
 	const keyWordMap = getKeyWordMap();
 	const elBtns = document.querySelectorAll('.key-words-container button');
 	elBtns.forEach(elBtn => {
-		const word = elBtn.innerText.toLowerCase();
+		const word = elBtn.value.toLowerCase();
 		elBtn.style.fontSize = `${keyWordMap[word] * 0.05}em`;
 	});
 }
@@ -99,4 +100,15 @@ function loadImageFromInput(ev, onImageReady) {
 
 function onToggleNavOpen() {
 	document.body.classList.toggle('nav-open');
+}
+
+function onSetLang(lang) {
+	document.querySelector('.language-select').value = lang;
+	setLang(lang);
+	doTrans();
+	if (isRTL(lang)) {
+		document.body.classList.add('rtl');
+	} else {
+		document.body.classList.remove('rtl');
+	}
 }

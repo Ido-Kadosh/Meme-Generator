@@ -108,9 +108,24 @@ function getImgByIdx(imgIdx) {
 }
 
 function setLineTxt(txt) {
+	if (!gMeme.lines.length) return;
 	resetSelectedLine();
 	const lineIdx = gMeme.selectedLineIdx;
 	gMeme.lines[lineIdx].txt = txt || 'Add Text Here';
+}
+
+function appendLineTxt(char) {
+	if (!gMeme.lines.length) return;
+	resetSelectedLine();
+	const lineIdx = gMeme.selectedLineIdx;
+	const txt = gMeme.lines[lineIdx].txt;
+	if (char === 'Backspace') {
+		gMeme.lines[lineIdx].txt = txt.substring(0, txt.length - 1);
+		if (txt.length === 1) deleteLine();
+	} else {
+		if (char.length > 1) return;
+		gMeme.lines[lineIdx].txt += char;
+	}
 }
 
 function setLinePos(dx, dy) {
