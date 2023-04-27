@@ -6,7 +6,6 @@
 	max-width: var(--m-meme-container);
 	font-size: 1.3125rem;
 	height: 73px;
-	border-radius: 37px;
 	background-color: #5970c1;
 	background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
 }
@@ -54,6 +53,7 @@ body.nav-open .main-header ul {
 }
 
 .main-header h2 {
+	font-size: 1em;
 	min-width: max-content;
 	margin-block: auto;
 	padding-inline: 50px;
@@ -66,7 +66,16 @@ body.nav-open .main-header ul {
 	transform: translate(50%, -50%);
 }
 
+@media screen and (min-width: 500px) {
+	.main-header h2 {
+		font-size: 1.5em;
+	}
+}
+
 @media screen and (min-width: 810px) {
+	.main-header {
+		border-radius: 37px;
+	}
 	.main-header .nav-hamburger {
 		display: none;
 	}
@@ -86,7 +95,7 @@ body.nav-open .main-header ul {
 	}
 }
 
-@media screen and (min-width: 1300px) {
+@media screen and (min-width: 1400px) {
 	.main-header {
 		max-width: var(--l-meme-container);
 	}

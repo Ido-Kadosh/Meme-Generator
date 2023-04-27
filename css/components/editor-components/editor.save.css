@@ -26,7 +26,7 @@
 	color: white;
 }
 
-@media screen and (min-width: 1300px) {
+@media screen and (min-width: 1400px) {
 	.save-container .btn {
 		margin-inline: 20px;
 	}

@@ -7,5 +7,8 @@
 	--header-height: 73px;
 	--l-meme-container: 1250px;
 	--m-meme-container: 800px;
-	--editor-button-size: 2.45em;
+	--l-editor-button-size: 3.675rem;
+	--m-editor-button-size: 3rem;
+	--l-editor-font-size: 1em;
+	--m-editor-font-size: 0.6em;
 }

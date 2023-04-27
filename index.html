@@ -10,22 +10,23 @@
 	</head>
 	<body onload="onInit()">
 		<div class="main-screen" onclick="onToggleNavOpen()"></div>
+		<header class="main-header">
+			<h2>Meme Generator</h2>
+			<nav>
+				<ul>
+					<li><button class="nav-button" onclick="onInit();">Gallery</button></li>
+					<li><button class="nav-button" onclick="onSavedClicked();">Saved</button></li>
+					<li><button class="nav-button" onclick="onRandomClicked();">Randomize</button></li>
+				</ul>
+			</nav>
+			<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
+		</header>
 		<section class="meme-gallery-page">
-			<header class="main-header">
-				<h2>Meme Generator</h2>
-				<nav>
-					<ul>
-						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
-						<li><button class="nav-button">Saved</button></li>
-						<li><button class="nav-button">Randomize</button></li>
-					</ul>
-				</nav>
-				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
-			</header>
+			
 			<main>
 				<section class="filter-search-section">
 					<div class="input-icon-container">
-						<input list="meme-types" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this)" />
+						<input list="meme-types" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this.value)" />
 						<datalist id="meme-types">
 							<option value="Funny"></option>
 							<option value="Cat"></option>
@@ -37,11 +38,11 @@
 					</div>
 
 					<div class="key-words-container">
-						<button onclick="onSearchMeme(this)" value="happy" class="keyword keyword1">Happy</button>
-						<button onclick="onSearchMeme(this)" value="sad" class="keyword keyword2">Sad</button>
-						<button onclick="onSearchMeme(this)" value="crazy" class="keyword keyword3">Crazy</button>
-						<button onclick="onSearchMeme(this)" value="sarcastic" class="keyword keyword4">Sarcastic</button>
-						<button onclick="onSearchMeme(this)" value="funny" class="keyword keyword5">Funny</button>
+						<button onclick="onKeywordPressed(this.value)" value="happy" class="keyword keyword1">Happy</button>
+						<button onclick="onKeywordPressed(this.value)" value="sad" class="keyword keyword2">Sad</button>
+						<button onclick="onKeywordPressed(this.value)" value="crazy" class="keyword keyword3">Crazy</button>
+						<button onclick="onKeywordPressed(this.value)" value="sarcastic" class="keyword keyword4">Sarcastic</button>
+						<button onclick="onKeywordPressed(this.value)" value="funny" class="keyword keyword5">Funny</button>
 					</div>
 				</section>
 				<section class="memes-grid-container"></section>
@@ -49,21 +50,10 @@
 		</section>
 
 		<section class="meme-editor-page hidden">
-			<header class="main-header">
-				<h2>Meme Generator</h2>
-				<nav>
-					<ul>
-						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
-						<li><button class="nav-button">Saved</button></li>
-						<li><button class="nav-button">Randomize</button></li>
-					</ul>
-				</nav>
-				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
-			</header>
 			<main>
 				<canvas class="meme-editor-canvas"></canvas>
 				<section class="editor-tools">
-					<input type="text" placeholder="Add Text Here" oninput="onAddTxt(this)" />
+					<input type="text" class="meme-text-input" placeholder="Add Text Here" oninput="onAddTxt(this)" />
 					<div class="input-editors-container">
 						<button onclick="onSwitchLine()" class="btn-editor btn-switch-inputs">
 							<i class="fa-solid fa-arrow-up-long"></i>
@@ -89,23 +79,13 @@
 						<button class="btn-font" onclick="onSetAlignment('right')">
 							<i class="fa-solid fa-align-right"></i>
 						</button>
-						<select onchange="onSetFont(this)">
-							<option value="impact">Impact</option>
-							<option value="arial">Arial</option>
-							<option value="verdana">Verdana</option>
-							<option value="tahoma">Tahoma</option>
-							<option value="trebuchet ms">Trebuchet MS</option>
-							<option value="times new roman">Times New Roman</option>
-							<option value="georgia">Georgia</option>
-							<option value="garamond">Garamond</option>
-							<option value="courier new">Courier New</option>
-							<option value="brush script mt">Brush Script MT</option>
+						<select class="font-picker" onchange="onSetFont(this)">
 						</select>
-						<button class="btn-font stroke-color-picker color-picker fa-solid fa-brush">
-							<input type="color" class="btn-font" oninput="onSetStrokeStyle(this)"></input>
+						<button class="btn-font stroke-color-icon color-picker fa-solid fa-brush">
+							<input type="color" class="stroke-color-input btn-font" oninput="onSetStrokeStyle(this)"></input>
 						</button>
-						<button class="btn-font fill-color-picker color-picker fa-solid fa-fill-drip">
-							<input type="color" class="btn-font" oninput="onSetFillStyle(this)"></input>
+						<button class="btn-font fill-color-icon color-picker fa-solid fa-fill-drip">
+							<input type="color" class="fill-color-input btn-font" oninput="onSetFillStyle(this)"></input>
 						</button>
 						
 					</div>
@@ -120,22 +100,16 @@
 		</section>
 
 		<section class="meme-saved-page hidden">
-			<header class="main-header">
-				<h2>Meme Generator</h2>
-				<nav>
-					<ul>
-						<li><button class="nav-button" onclick="onInit()">Gallery</button></li>
-						<li><button class="nav-button">Saved</button></li>
-						<li><button class="nav-button">Randomize</button></li>
-					</ul>
-				</nav>
-				<button class="nav-hamburger" onclick="onToggleNavOpen()"><i class="fa-solid fa-bars"></i></button>
-			</header>
+			<main>
+				<section class="saved-memes-container"></section>
+			</main>
+
 		</section>
-		<script src="js/gallery.controller.js"></script>
-		<script src="js/editor.controller.js"></script>
 		<script src="js/services/util.service.js"></script>
 		<script src="js/services/storage.service.js"></script>
 		<script src="js/services/meme.service.js"></script>
+		<script src="js/gallery.controller.js"></script>
+		<script src="js/editor.controller.js"></script>
+		<script src="js/saved.controller.js"></script>
 	</body>
 </html>

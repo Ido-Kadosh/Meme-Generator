@@ -1,6 +1,7 @@
 'use strict';
 
 const DEFAULT_CANVAS_WIDTH = 600;
+const ROTATE_SQUARE_SIZE = 10;
 const CLICK_MARGIN = 10; //we give 10 pixels on each side to make clicking easier.
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend'];
 
@@ -11,14 +12,22 @@ let gElCanvas,
 	gStartPos = {},
 	gIsListenersAdded = false,
 	gIsMouseDown = false,
+	gIsRotate = false,
 	gIsDrag = false;
 
 function openMemeEditor() {
+	document.querySelector('.meme-gallery-page').classList.add('hidden');
+	document.querySelector('.meme-saved-page').classList.add('hidden');
+	document.querySelector('.meme-editor-page').classList.remove('hidden');
+
 	gElImg = null;
 	gElCanvas = document.querySelector('.meme-editor-canvas');
 	gCtx = gElCanvas.getContext('2d');
-	gCtx.lineWidth = 3; //this will stay like this as long as we don't implement a button to change it so it's initialized here.
+	gCtx.lineWidth = 3; //this will stay like this as long as we don't implement a button to change it so it's initialized here
+
+	renderFonts();
 	renderImage();
+	resetInputs();
 	if (!gIsListenersAdded) addCanvasEventListeners();
 }
 
@@ -40,15 +49,44 @@ function addCanvasEventListeners() {
 	gIsListenersAdded = true; // make sure we only add listeners once.
 }
 
+function onSetSelectedLine(lineIdx) {
+	setSelectedLine(lineIdx);
+	renderFontInputs();
+}
+
+function resetInputs() {
+	document.querySelector('.meme-text-input').value = '';
+	renderFontInputs();
+}
+
+function renderFonts() {
+	const fonts = getFonts();
+	const strHTML = fonts.map(font => `<option value="${font}">${font.toUpperCase()}</option>`).join('');
+	const elContainer = document.querySelector('.font-picker');
+	elContainer.innerHTML = strHTML;
+}
+
+function renderFontInputs() {
+	const meme = getMeme();
+	const lineIdx = meme.selectedLineIdx;
+	const line = meme.lines[lineIdx] || 0;
+	document.querySelector('.stroke-color-input').value = line.strokeStyle;
+	document.querySelector('.fill-color-input').value = line.fillStyle;
+	document.querySelector('.stroke-color-icon').style.color = line.strokeStyle;
+	document.querySelector('.fill-color-icon').style.color = line.fillStyle;
+	document.querySelector('.font-picker').value = line.font;
+}
+
 function onDown(ev) {
 	const pos = getEvPos(ev);
-	const lineIdx = findClickedLineIdx(pos);
+	let lineIdx = findClickedLineIdx(pos);
+	// check lineIdx again to see if text line pressed.
 	if (lineIdx === -1) {
 		setLineEmpty();
 		renderImage();
 		return;
 	}
-	setSelectedLine(lineIdx);
+	onSetSelectedLine(lineIdx);
 	renderImage();
 	gIsDrag = true;
 	document.body.style.cursor = 'move';
@@ -57,19 +95,22 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-	if (!gIsDrag || !gIsMouseDown) return;
-	const pos = getEvPos(ev);
+	// only stay if mouse is down and either one of gIsDrag or gIsRotate is true
+	if (!gIsMouseDown || !gIsDrag) return;
 
+	const pos = getEvPos(ev);
 	const dx = pos.x - gStartPos.x;
 	const dy = pos.y - gStartPos.y;
 	gStartPos.x = pos.x;
 	gStartPos.y = pos.y;
+
 	setLinePos(dx, dy);
 	renderImage();
 }
 
 function onUp() {
 	gIsDrag = false;
+	gIsRotate = false;
 	document.body.style.cursor = 'default';
 }
 
@@ -135,7 +176,7 @@ function drawTxt(lines) {
 		gCtx.strokeStyle = line.strokeStyle;
 		gCtx.fillStyle = line.fillStyle;
 		gCtx.textAlign = line.align;
-		gCtx.font = `${line.size}px ${line.font}`;
+		gCtx.font = `${line.size}px  ${line.font}`;
 		gCtx.fillText(line.txt, x, y);
 		gCtx.strokeText(line.txt, x, y);
 	});
@@ -153,6 +194,7 @@ function onDeleteLine() {
 
 function onSwitchLine() {
 	switchLine();
+	renderFontInputs();
 	renderImage();
 }
 
@@ -191,15 +233,23 @@ function onDownloadMeme(elLink) {
 	elLink.href = imgContent;
 }
 
-function onSaveMeme() {}
+function onSaveMeme() {
+	setLineEmpty();
+	renderImage();
+	const meme = getMeme();
+	const img = getCurrImg();
+	const annotatedImg = gElCanvas.toDataURL('image/jpeg');
+	saveMeme(meme, img, annotatedImg);
+}
 
 function onShareMeme() {}
 
 function findClickedLineIdx(checkPos) {
 	const meme = getMeme();
 	return meme.lines.findIndex(line => {
-		const text = line.txt;
-		const width = gCtx.measureText(text).width;
+		gCtx.save();
+		gCtx.font = `${line.size}px ${line.font}`; // we need to set font since measureText uses selected font to find width.
+		const width = gCtx.measureText(line.txt).width;
 		// since drawing text goes up and canvas coords goes down, we put this in y2.
 		let { x: x1, y: y2 } = line.pos;
 		let x2 = x1 + width;
@@ -218,28 +268,33 @@ function findClickedLineIdx(checkPos) {
 		x2 += CLICK_MARGIN;
 		y1 -= CLICK_MARGIN;
 		y2 += CLICK_MARGIN;
+		gCtx.restore();
 		return checkPos.x > x1 && checkPos.x < x2 && checkPos.y > y1 && checkPos.y < y2;
 	});
 }
 
 function drawOutlineRectangle(line) {
 	gCtx.save();
-	gCtx.lineWidth = 5;
+	gCtx.lineWidth = 3;
+	gCtx.strokeStyle = '#000000';
+
 	let { x, y } = line.pos;
 	y -= line.size; // since drawing text goes up and canvas coords goes down, we reduce y by height.
 	gCtx.font = `${line.size}px ${line.font}`; // we need to set font since measureText uses selected font to find width.
 	const width = gCtx.measureText(line.txt).width;
-	gCtx.setLineDash([line.size / 5, line.size / 8]); //numbers are random to make it look nice.
+
 	if (line.align === 'center') {
 		x = x - width / 2;
 	}
 	if (line.align === 'right') {
 		x = x - width;
 	}
+
+	x -= CLICK_MARGIN;
+
 	gCtx.beginPath();
-	gCtx.rect(x - CLICK_MARGIN / 3, y - CLICK_MARGIN / 3 + 5, width + CLICK_MARGIN, line.size + CLICK_MARGIN / 2);
+	gCtx.rect(x, y, width + CLICK_MARGIN * 2, line.size + CLICK_MARGIN);
 	gCtx.stroke();
-	gCtx.restore();
 }
 
 function onResizeCanvas() {

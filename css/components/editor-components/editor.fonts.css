@@ -1,8 +1,8 @@
 /* FONT BUTTONS */
 .font-editors-container {
-	font-size: 1.4rem;
+	font-size: 1.5rem;
 	display: grid;
-	gap: calc(var(--editor-button-size) / 2);
+	gap: calc(var(--l-editor-button-size) / 2);
 	grid-template-columns: repeat(5, 1fr);
 	background-color: #19a59f;
 	border-radius: 15px;
@@ -10,21 +10,34 @@
 }
 
 .font-editors-container select {
-	grid-column: 1/4;
-	height: var(--editor-button-size);
-	font-size: 1em;
+	grid-column: 1/-3;
+	height: var(--m-editor-button-size);
+	font-size: var(--m-editor-font-size);
 	color: black;
 	border: none;
 	border-radius: 10px;
 }
 
 .font-editors-container .btn-font {
-	width: var(--editor-button-size);
-	height: var(--editor-button-size);
-	font-size: 1em;
+	width: var(--m-editor-button-size);
+	height: var(--m-editor-button-size);
+	font-size: var(--m-editor-font-size);
 	color: black;
 	border: none;
 	border-radius: 10px;
+}
+
+@media screen and (min-width: 630px) {
+	.font-editors-container .btn-font {
+		width: var(--l-editor-button-size);
+		height: var(--l-editor-button-size);
+		font-size: var(--l-editor-font-size);
+	}
+
+	.font-editors-container select {
+		height: var(--l-editor-button-size);
+		font-size: var(--l-editor-font-size);
+	}
 }
 
 /* FONT COLOR BUTTONS  */

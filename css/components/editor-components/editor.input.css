@@ -3,24 +3,39 @@
 	background-color: #ebeef3;
 	border-radius: 1.75rem;
 	border: none;
-	height: var(--editor-button-size);
+	height: var(--m-editor-button-size);
+	font-size: var(--m-editor-font-size);
 	width: 80%;
-	height: 60px;
+	padding-inline-start: 50px;
 	border: 1px 5px 0 #bbc4d1, inset 0 5px 0 #ffffff;
 }
 
+@media screen and (min-width: 630px) {
+	.editor-tools input {
+		height: var(--l-editor-button-size);
+	}
+}
+
 .editor-tools input:focus {
-	outline: 1px solid blue;
+	outline: 3px solid #19a59f;
 }
 
 /* INPUT BUTTONS */
 .editor-tools .btn-editor {
-	width: var(--editor-button-size);
-	height: var(--editor-button-size);
-	font-size: 1em;
+	width: var(--m-editor-button-size);
+	height: var(--m-editor-button-size);
+	font-size: var(--m-editor-font-size);
 	color: white;
 	border: none;
 	border-radius: 10px;
+}
+
+@media screen and (min-width: 630px) {
+	.editor-tools .btn-editor {
+		width: var(--l-editor-button-size);
+		height: var(--l-editor-button-size);
+		font-size: var(--l-editor-font-size);
+	}
 }
 
 .editor-tools .btn-switch-inputs {

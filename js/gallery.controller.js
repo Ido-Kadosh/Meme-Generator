@@ -3,6 +3,7 @@
 let gGalleryRendered = false;
 
 function onInit() {
+	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
 	if (!gGalleryRendered) renderGallery();
 	renderKeywordSize();
 	document.querySelector('.meme-gallery-page').classList.remove('hidden');
@@ -12,7 +13,9 @@ function onInit() {
 
 function renderGallery(filter) {
 	const imgs = getImagesByFilter(filter);
-	const strHTML = imgs
+	let strHTML = `<label class="file-input-label" for="file-upload-input">Upload Image</label>
+		<input type="file" id="file-upload-input" class="btn file-input" name="image" onchange="onImgUpload(event)"/>`;
+	strHTML += imgs
 		.map(img => {
 			return `<article class="meme-list-image">
         <img src="${img.url}" alt="${img.keywords[0]} meme" onclick="onMemePicked(this)"/>
@@ -24,17 +27,37 @@ function renderGallery(filter) {
 	gGalleryRendered = true;
 }
 
-function onMemePicked(el) {
-	document.querySelector('.meme-gallery-page').classList.add('hidden');
-	document.querySelector('.meme-editor-page').classList.remove('hidden');
-	setMeme(el);
+function onMemePicked(elImg, random = false) {
+	setMeme(elImg, random);
 	openMemeEditor();
 }
 
-function onSearchMeme(elInput) {
-	const keyWord = elInput.value;
-	renderGallery(keyWord);
-	updateKeyWordSize(keyWord);
+function onSavedClicked() {
+	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
+	document.querySelector('.meme-gallery-page').classList.add('hidden');
+	document.querySelector('.meme-editor-page').classList.add('hidden');
+	document.querySelector('.meme-saved-page').classList.remove('hidden');
+	onSavedInit();
+}
+
+function onRandomClicked() {
+	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
+	const imgs = getImages();
+	const imgIdx = getRandomInt(0, imgs.length);
+	const elImgs = document.querySelectorAll('.meme-list-image img');
+	const elImg = elImgs[imgIdx];
+	onMemePicked(elImg, true); // second argument for random meme attributes
+}
+
+function onSearchMeme(searchValue) {
+	renderGallery(searchValue);
+	updateKeyWordSize(searchValue);
+}
+
+function onKeywordPressed(keyWord) {
+	const elInput = document.querySelector('.search-meme-input');
+	elInput.value = keyWord;
+	onSearchMeme(keyWord);
 }
 
 function updateKeyWordSize(keyWord) {
@@ -56,6 +79,22 @@ function renderKeywordSize() {
 		const word = elBtn.innerText.toLowerCase();
 		elBtn.style.fontSize = `${keyWordMap[word] * 0.05}em`;
 	});
+}
+
+function onImgUpload(ev) {
+	loadImageFromInput(ev, onMemePicked);
+}
+
+function loadImageFromInput(ev, onImageReady) {
+	const reader = new FileReader();
+	// After we read the file
+	reader.onload = function (event) {
+		let img = new Image(); // Create a new html img element
+		img.src = event.target.result; // Set the img src to the img file we read
+		// Run the callBack func, To render the img on the canvas
+		img.onload = () => onImageReady(img);
+	};
+	reader.readAsDataURL(ev.target.files[0]); // Read the file we picked
 }
 
 function onToggleNavOpen() {

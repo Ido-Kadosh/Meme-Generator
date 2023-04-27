@@ -4,21 +4,29 @@
 	gap: 50px;
 	align-items: center;
 	max-width: min-content;
-	margin: 50px auto;
+	margin: 0px auto;
 	overflow-y: auto;
 	overflow-x: hidden;
 	/* 50px for top padding, 10px to make less precise. */
 	max-height: calc(100vh - 50px - 10px - (var(--header-height)));
 }
 
-/* canvas {
-	border-radius: 20px;
-} */
+@media screen and (min-width: 810px) {
+	.meme-editor-page main {
+		margin: 50px auto;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.meme-editor-page main {
+		flex-direction: row;
+	}
+}
 
 .editor-tools {
 	padding: 50px;
 	gap: 20px;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
@@ -26,20 +34,4 @@
 
 	background-color: #383b42;
 	border-radius: 1.875em;
-	/* max-width: 700px; */
-	/* place-self: center; */
-	/* flex: 1; */
-}
-
-@media screen and (min-width: 630px) {
-	.editor-tools {
-		font-size: 1.5rem;
-	}
-}
-
-@media screen and (min-width: 1300px) {
-	.meme-editor-page main {
-		flex-direction: row;
-		justify-content: space-evenly;
-	}
 }
