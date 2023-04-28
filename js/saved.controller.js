@@ -33,9 +33,8 @@ function renderSaved(annotatedImgs, imgs) {
 }
 
 function onLoadFromSaved(el) {
-	const imgSrc = el.src;
 	const memes = getLoadedMemes();
 	let meme = memes[el.dataset.index];
-	loadMeme(imgSrc, meme);
+	loadMeme(meme);
 	openMemeEditor();
 }

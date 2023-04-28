@@ -48,16 +48,16 @@ function _setGImages() {
 			{ id: makeId(), url: 'img/0005.jpg', keywords: ['funny', 'patrick', 'science'], name: 'Patrick star' },
 			{ id: makeId(), url: 'img/0006.jpg', keywords: ['funny', 'chris'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0007.jpg', keywords: ['funny', 'guy'], name: 'Meme Name' },
-			{ id: makeId(), url: 'img/0008.jpg', keywords: ['robin', 'batman', 'slap'], name: 'Meme Name' },
+			{ id: makeId(), url: 'img/0008.jpg', keywords: ['crazy', 'batman', 'slap'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0009.jpg', keywords: ['jesus', 'funny'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0010.jpg', keywords: ['drake', 'no', 'yes'], name: 'Meme Name' },
-			{ id: makeId(), url: 'img/0011.jpg', keywords: ['weird', 'fututrama'], name: 'Meme Name' },
+			{ id: makeId(), url: 'img/0011.jpg', keywords: ['sad', 'fututrama'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0012.jpg', keywords: ['dinosaur', 'philosoraptor'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0013.jpg', keywords: ['penguin', 'funny'], name: 'Meme Name' },
-			{ id: makeId(), url: 'img/0014.jpg', keywords: ['kid', 'happy'], name: 'Meme Name' },
+			{ id: makeId(), url: 'img/0014.jpg', keywords: ['sad', 'happy'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0015.jpg', keywords: ['surprised', 'pikachu'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0016.jpg', keywords: ['same', 'corporate'], name: 'Meme Name' },
-			{ id: makeId(), url: 'img/0017.jpg', keywords: ['buttons', 'red'], name: 'Meme Name' },
+			{ id: makeId(), url: 'img/0017.jpg', keywords: ['sarcastic', 'red'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0018.jpg', keywords: ['funny', 'woman'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0019.jpg', keywords: ['cute', 'dogs'], name: 'Meme Name' },
 			{ id: makeId(), url: 'img/0020.jpg', keywords: ['funny', 'obama'], name: 'Meme Name' },
@@ -256,13 +256,12 @@ function getLoadedAnnotatedImgs() {
 	return loadFromStorage(ANNOTATED_IMG_STORAGE_KEY) || [];
 }
 
-function loadMeme(imgSrc, meme) {
+function loadMeme(meme) {
 	gMeme = {
 		selectedImgId: meme.selectedImgId,
 		selectedLineIdx: meme.selectedLineIdx,
 		lines: structuredClone(meme.lines),
 	};
-	//TODO load image if uploaded.
 }
 
 function setMeme(elImg, randomize = false) {
@@ -282,7 +281,6 @@ function setMeme(elImg, randomize = false) {
 }
 
 function _createRandomLine() {
-	//TODO make this work with canvas size and change pos accordingly
 	return {
 		txt: makeLorem(getRandomInt(3, 6)),
 		size: getRandomInt(30, 61),

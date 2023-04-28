@@ -35,7 +35,6 @@ function openMemeEditor() {
 
 function addCanvasEventListeners() {
 	window.addEventListener('resize', onResizeCanvas);
-	//TODO make it work with document listener, so that you can remove selected when clicking outside of canvas
 	gElCanvas.addEventListener('mousedown', onDown);
 	gElCanvas.addEventListener('mousemove', onMove);
 	gElCanvas.addEventListener('mouseup', onUp);
@@ -358,7 +357,6 @@ function onResizeCanvas() {
 }
 
 function onKeyPressed(ev) {
-	console.log(ev);
 	appendLineTxt(ev.key);
 	renderImage();
 }
