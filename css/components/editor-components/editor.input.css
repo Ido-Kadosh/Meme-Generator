@@ -13,6 +13,7 @@
 @media screen and (min-width: 630px) {
 	.editor-tools input {
 		height: var(--l-editor-button-size);
+		font-size: var(--l-editor-font-size);
 	}
 }
 

@@ -26,7 +26,6 @@ const DUMMY_LINE = {
 	align: 'left',
 	strokeStyle: '#000000',
 	fillStyle: '#ffffff',
-	rotation: 20,
 };
 
 let gKeywordSearchCountMap = { happy: 13, sad: 13, crazy: 15, sarcastic: 17, funny: 20 };
@@ -193,19 +192,20 @@ function _createLine({ txt = 'Add Text Here', size, align, strokeStyle, fillStyl
 		strokeStyle,
 		fillStyle,
 		pos: { ...gCreationPos },
-		rotation: 20,
 	};
 }
 
-function addLine() {
-	let line;
+function addLine(txt) {
+	let line, lineValues;
+
 	if (gMeme.selectedLineIdx === -1) resetSelectedLine();
 	let selectedLine = getCurrLine(); //default values will be same as selected line
 	if (!selectedLine) {
-		line = _createLine(DUMMY_LINE);
+		lineValues = { ...DUMMY_LINE, ...(txt && { txt }) }; // this only inserts txt if txt is truthy.
 	} else {
-		line = _createLine(selectedLine);
+		lineValues = { ...selectedLine, ...(txt && { txt }) };
 	}
+	line = _createLine(lineValues);
 
 	gMeme.lines.push(line);
 	gMeme.selectedLineIdx = gMeme.lines.length - 1; // always select previous text
@@ -290,7 +290,6 @@ function _createRandomLine() {
 		strokeStyle: getRandomColor(),
 		fillStyle: getRandomColor(),
 		pos: { x: getRandomInt(50, 101), y: getRandomInt(50, 101) },
-		rotation: 0,
 	};
 }
 

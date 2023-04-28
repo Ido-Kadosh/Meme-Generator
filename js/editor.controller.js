@@ -10,13 +10,14 @@ let gElCanvas,
 	gElImg,
 	gCanvasWidth = DEFAULT_CANVAS_WIDTH,
 	gStartPos = {},
+	gIntervalId,
 	gIsListenersAdded = false,
 	gIsMouseDown = false,
 	gIsRotate = false,
-	gIsZoom = false,
 	gIsDrag = false;
 
 function openMemeEditor() {
+	document.querySelector('.active')?.classList.remove('active');
 	document.querySelector('.meme-gallery-page').classList.add('hidden');
 	document.querySelector('.meme-saved-page').classList.add('hidden');
 	document.querySelector('.meme-editor-page').classList.remove('hidden');
@@ -86,13 +87,13 @@ function getElImg(url) {
 
 function onDown(ev) {
 	const pos = getEvPos(ev);
-	if (gIsZoom) return;
 	let lineIdx = findClickedLineIdx(pos);
 	if (lineIdx === -1) {
 		setLineEmpty();
 		renderImage();
 		return;
 	}
+	ev.preventDefault(); // only prevent defaults if a line is clicked, so we can drag/zoom freely on mobile.
 	onSetSelectedLine(lineIdx);
 	renderImage();
 	gIsDrag = true;
@@ -102,8 +103,9 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
+	clearInterval(gIntervalId);
 	// only stay if mouse is down and either one of gIsDrag or gIsRotate is true
-	if (!gIsMouseDown || !gIsDrag || gIsZoom) return;
+	if (!gIsMouseDown || !gIsDrag) return;
 
 	const pos = getEvPos(ev);
 	const dx = pos.x - gStartPos.x;
@@ -118,7 +120,6 @@ function onMove(ev) {
 function onUp() {
 	gIsDrag = false;
 	gIsRotate = false;
-	gIsZoom = false;
 	document.body.style.cursor = 'default';
 }
 
@@ -128,12 +129,7 @@ function getEvPos(ev) {
 		y: ev.offsetY,
 	};
 	if (TOUCH_EVS.includes(ev.type)) {
-		if (ev.changedTouches.length > 1) {
-			gIsZoom = true;
-			return;
-		} // allow user to zoom.
-		// prevent triggering mouse events
-		ev.preventDefault();
+		// ev.preventDefault();
 		ev = ev.changedTouches[0];
 		// calc the right pos according to the touch screen
 		pos = {
@@ -195,6 +191,7 @@ function drawOutlineRectangle(line) {
 	gCtx.beginPath();
 	gCtx.rect(x, y, width + CLICK_MARGIN * 2, line.size + CLICK_MARGIN);
 	gCtx.stroke();
+	gCtx.restore();
 }
 
 function renderFonts() {
@@ -256,7 +253,8 @@ function resetInputs() {
 }
 
 function onAddLine() {
-	addLine();
+	const txt = document.querySelector('.meme-text-input').value;
+	addLine(txt);
 	renderImage();
 }
 
@@ -315,7 +313,43 @@ function onSaveMeme() {
 	saveMeme(meme, img, annotatedImg);
 }
 
-function onShareMeme() {}
+function onShareMeme() {
+	setLineEmpty();
+	renderImage();
+	const imgDataUrl = gElCanvas.toDataURL('image/jpeg'); // Gets the canvas content as an image format
+	// A function to be called if request succeeds
+	function onSuccess(uploadedImgUrl) {
+		// Encode the instance of certain characters in the url
+		const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl);
+		window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`);
+	}
+	// Send the image to the server
+	doUploadImg(imgDataUrl, onSuccess);
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+	// Pack the image for delivery
+	const formData = new FormData();
+	formData.append('img', imgDataUrl);
+
+	// Send a post req with the image to the server
+	const XHR = new XMLHttpRequest();
+	XHR.onreadystatechange = () => {
+		// If the request is not done, we have no business here yet, so return
+		if (XHR.readyState !== XMLHttpRequest.DONE) return;
+		// if the response is not ok, show an error
+		if (XHR.status !== 200) return console.error('Error uploading image');
+		const url = XHR.responseText;
+		// If the response is ok, call the onSuccess callback function,
+		// that will create the link to facebook using the url we got
+		onSuccess(url);
+	};
+	XHR.onerror = (req, ev) => {
+		console.error('Error connecting to server with request:', req, '\nGot response data:', ev);
+	};
+	XHR.open('POST', '//ca-upload.com/here/upload.php');
+	XHR.send(formData);
+}
 
 function onResizeCanvas() {
 	//if screen is smaller than default width, we make canvas smaller.
@@ -324,6 +358,7 @@ function onResizeCanvas() {
 }
 
 function onKeyPressed(ev) {
+	console.log(ev);
 	appendLineTxt(ev.key);
 	renderImage();
 }

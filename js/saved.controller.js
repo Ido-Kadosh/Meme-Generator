@@ -5,6 +5,13 @@ const IMGS_STORAGE_KEY = 'DB_IMAGE';
 const ANNOTATED_IMGS_STORAGE_KEY = 'DB_ANNOTATED_IMG';
 
 function onSavedInit() {
+	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
+	document.querySelector('.meme-gallery-page').classList.add('hidden');
+	document.querySelector('.meme-editor-page').classList.add('hidden');
+	document.querySelector('.meme-saved-page').classList.remove('hidden');
+	document.querySelector('.active')?.classList.remove('active');
+	document.querySelector('.saved-li').classList.add('active');
+
 	// const memes = getLoadedMemes();
 	const imgs = getLoadedImgs();
 	const annotatedImgs = getLoadedAnnotatedImgs();

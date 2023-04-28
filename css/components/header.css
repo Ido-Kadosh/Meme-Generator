@@ -17,6 +17,16 @@
 	font-size: 1em;
 }
 
+.main-header .active {
+	background-color: white;
+}
+
+.main-header .active > button {
+	background: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
 .main-header nav {
 	margin-block: auto;
 }
@@ -107,6 +117,9 @@ body.rtl .main-header .nav-hamburger {
 	.main-header li {
 		border: none;
 		height: 100%;
+	}
+	.main-header .active {
+		border-radius: 25px;
 	}
 }
 

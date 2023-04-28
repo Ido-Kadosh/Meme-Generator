@@ -4,11 +4,14 @@ let gGalleryRendered = false;
 
 function onInit() {
 	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
-	if (!gGalleryRendered) renderGallery();
-	renderKeywordSize();
+	document.querySelector('.active')?.classList.remove('active');
+	document.querySelector('.gallery-li').classList.add('active');
 	document.querySelector('.meme-gallery-page').classList.remove('hidden');
 	document.querySelector('.meme-editor-page').classList.add('hidden');
 	document.querySelector('.meme-saved-page').classList.add('hidden');
+
+	if (!gGalleryRendered) renderGallery();
+	renderKeywordSize();
 }
 
 function renderGallery(filter) {
@@ -31,14 +34,6 @@ function renderGallery(filter) {
 function onMemePicked(elImg, random = false) {
 	setMeme(elImg, random);
 	openMemeEditor();
-}
-
-function onSavedClicked() {
-	document.body.classList.remove('nav-open'); // just incase we got here from mobile, we want to close navbar.
-	document.querySelector('.meme-gallery-page').classList.add('hidden');
-	document.querySelector('.meme-editor-page').classList.add('hidden');
-	document.querySelector('.meme-saved-page').classList.remove('hidden');
-	onSavedInit();
 }
 
 function onRandomClicked() {
