@@ -1,12 +1,12 @@
 /* FONT BUTTONS */
 .font-editors-container {
-	font-size: 1.5rem;
 	display: grid;
-	gap: calc(var(--l-editor-button-size) / 2);
+	gap: calc(var(--m-editor-button-size) / 2);
 	grid-template-columns: repeat(5, 1fr);
 	background-color: #19a59f;
 	border-radius: 15px;
-	padding: 20px;
+	padding: 0.83em;
+	width: 100%;
 }
 
 .font-editors-container select {
@@ -19,7 +19,7 @@
 }
 
 .font-editors-container .btn-font {
-	width: var(--m-editor-button-size);
+	/* width: var(--m-editor-button-size); */
 	height: var(--m-editor-button-size);
 	font-size: var(--m-editor-font-size);
 	color: black;
@@ -28,8 +28,13 @@
 }
 
 @media screen and (min-width: 630px) {
+	.font-editors-container {
+		gap: calc(var(--l-editor-button-size) / 2);
+		width: 85%;
+	}
+
 	.font-editors-container .btn-font {
-		width: var(--l-editor-button-size);
+		/* width: var(--l-editor-button-size); */
 		height: var(--l-editor-button-size);
 		font-size: var(--l-editor-font-size);
 	}

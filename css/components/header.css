@@ -40,6 +40,7 @@
 	transition: transform 0.6s;
 }
 
+/* this has more specificity than what removes it, so we put it in media query. */
 @media screen and (max-width: 810px) {
 	body.rtl .main-header ul {
 		right: auto;
