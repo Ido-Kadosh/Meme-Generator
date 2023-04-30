@@ -12,21 +12,21 @@ function onSavedInit() {
 	document.querySelector('.active')?.classList.remove('active');
 	document.querySelector('.saved-li').classList.add('active');
 
-	// const memes = getLoadedMemes();
-	const imgs = getLoadedImgs();
-	const annotatedImgs = getLoadedAnnotatedImgs();
-	renderSaved(annotatedImgs, imgs);
+	renderSaved();
 }
 
-function renderSaved(annotatedImgs, imgs) {
+function renderSaved() {
+	const imgs = getLoadedImgs();
+	const annotatedImgs = getLoadedAnnotatedImgs();
 	const strHTML = annotatedImgs
-		.map((img, index) => {
-			return `<article class="meme-list-image">
+		.map(
+			(img, index) => `<article class="meme-list-image">
         <img src="${img}" alt="${imgs[index].keywords[0]} meme" 
-        data-index='${index}'
+        data-index="${index}"
          onclick="onLoadFromSaved(this)"/>
-        </article>`;
-		})
+		 <button data-index="${index}" class="delete-saved-button" onclick="onDeleteSaved(this)">Delete</button>
+        </article>`
+		)
 		.join('');
 	const elContainer = document.querySelector('.saved-memes-container');
 	elContainer.innerHTML = strHTML;
@@ -37,4 +37,10 @@ function onLoadFromSaved(el) {
 	let meme = memes[el.dataset.index];
 	loadMeme(meme);
 	openMemeEditor();
+}
+
+function onDeleteSaved(el) {
+	const idx = el.dataset.index;
+	deleteSaved(idx);
+	renderSaved();
 }

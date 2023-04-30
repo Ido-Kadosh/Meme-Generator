@@ -27,7 +27,7 @@ function openMemeEditor() {
 	gCtx.lineWidth = 3; //this will stay like this as long as we don't implement a button to change it so it's initialized here
 
 	renderFonts();
-	renderImage();
+	renderMeme();
 	resetInputs();
 	if (!gIsListenersAdded) addCanvasEventListeners();
 	onResizeCanvas();
@@ -52,19 +52,19 @@ function addCanvasEventListeners() {
 	gIsListenersAdded = true; // make sure we only add listeners once.
 }
 
-function renderImage() {
+function renderMeme() {
 	const meme = getMeme();
 	if (!gElImg) {
 		const img = getCurrImg();
 		gElImg = getElImg(img.url);
-		gElImg.onload = () => renderMeme(meme);
+		gElImg.onload = () => renderImage(meme);
 	} else {
-		renderMeme(meme);
+		renderImage(meme);
 	}
 }
 
 // we put this in an outside function so we can call it without waiting for img to load if we have img in global.
-function renderMeme(meme) {
+function renderImage(meme) {
 	// set canvas size using image aspect ratio
 	gElCanvas.width = gCanvasWidth;
 	gElCanvas.height = (gElImg.naturalHeight * gCanvasWidth) / gElImg.naturalWidth;
@@ -89,12 +89,12 @@ function onDown(ev) {
 	let lineIdx = findClickedLineIdx(pos);
 	if (lineIdx === -1) {
 		setLineEmpty();
-		renderImage();
+		renderMeme();
 		return;
 	}
 	ev.preventDefault(); // only prevent defaults if a line is clicked, so we can drag/zoom freely on mobile.
 	onSetSelectedLine(lineIdx);
-	renderImage();
+	renderMeme();
 	gIsDrag = true;
 	document.body.style.cursor = 'move';
 	gStartPos.x = pos.x;
@@ -113,7 +113,7 @@ function onMove(ev) {
 	gStartPos.y = pos.y;
 
 	setLinePos(dx, dy);
-	renderImage();
+	renderMeme();
 }
 
 function onUp() {
@@ -232,17 +232,19 @@ function stopLineEditing(ev) {
 		el = el.parentNode;
 	} while (el);
 	setLineEmpty();
-	renderImage();
+	renderMeme();
 }
 
 function onAddTxt(elInput) {
 	const txt = elInput.value;
 	setLineTxt(txt);
-	renderImage();
+	renderMeme();
 }
 
 function onSetSelectedLine(lineIdx) {
 	setSelectedLine(lineIdx);
+	const line = getCurrLine();
+	if (line.txt !== 'Add Text Here') document.querySelector('.meme-text-input').value = line.txt;
 	renderFontInputs();
 }
 
@@ -254,50 +256,51 @@ function resetInputs() {
 function onAddLine() {
 	const txt = document.querySelector('.meme-text-input').value;
 	addLine(txt);
-	renderImage();
+	renderMeme();
 }
 
 function onDeleteLine() {
+	document.querySelector('.meme-text-input').value = '';
 	deleteLine();
-	renderImage();
+	renderMeme();
 }
 
 function onSwitchLine() {
 	switchLine();
 	renderFontInputs();
-	renderImage();
+	renderMeme();
 }
 
 function onUpdateLineSize(diff) {
 	updateLineSize(diff);
-	renderImage();
+	renderMeme();
 }
 
 function onSetAlignment(alignment) {
 	setLineAlign(alignment);
-	renderImage();
+	renderMeme();
 }
 
 function onSetFont(elSelect) {
 	setLineFont(elSelect.value);
-	renderImage();
+	renderMeme();
 }
 
 function onSetStrokeStyle(elColor) {
 	elColor.parentNode.style.color = elColor.value;
 	setStrokeStyle(elColor.value);
-	renderImage();
+	renderMeme();
 }
 
 function onSetFillStyle(elColor) {
 	elColor.parentNode.style.color = elColor.value;
 	setFillStyle(elColor.value);
-	renderImage();
+	renderMeme();
 }
 
 function onDownloadMeme(elLink) {
 	setLineEmpty();
-	renderImage();
+	renderMeme();
 	const imgContent = gElCanvas.toDataURL('image/jpeg'); // image/jpeg the default format
 	elLink.download = getCurrImg().name;
 	elLink.href = imgContent;
@@ -305,16 +308,22 @@ function onDownloadMeme(elLink) {
 
 function onSaveMeme() {
 	setLineEmpty();
-	renderImage();
+	renderMeme();
 	const meme = getMeme();
 	const img = getCurrImg();
 	const annotatedImg = gElCanvas.toDataURL('image/jpeg');
 	saveMeme(meme, img, annotatedImg);
+
+	const saveModal = document.querySelector('.save-confirmation-modal');
+	saveModal.classList.add('shown');
+	setTimeout(() => {
+		saveModal.classList.remove('shown');
+	}, 2000);
 }
 
 function onShareMeme() {
 	setLineEmpty();
-	renderImage();
+	renderMeme();
 	const imgDataUrl = gElCanvas.toDataURL('image/jpeg'); // Gets the canvas content as an image format
 	// A function to be called if request succeeds
 	function onSuccess(uploadedImgUrl) {
@@ -330,7 +339,6 @@ function doUploadImg(imgDataUrl, onSuccess) {
 	// Pack the image for delivery
 	const formData = new FormData();
 	formData.append('img', imgDataUrl);
-
 	// Send a post req with the image to the server
 	const XHR = new XMLHttpRequest();
 	XHR.onreadystatechange = () => {
@@ -353,10 +361,11 @@ function doUploadImg(imgDataUrl, onSuccess) {
 function onResizeCanvas() {
 	//if screen is smaller than default width, we make canvas smaller.
 	gCanvasWidth = Math.min(window.innerWidth, DEFAULT_CANVAS_WIDTH);
-	renderImage();
+	renderMeme();
 }
 
 function onKeyPressed(ev) {
+	document.querySelector('.meme-text-input').value += ev.key;
 	appendLineTxt(ev.key);
-	renderImage();
+	renderMeme();
 }

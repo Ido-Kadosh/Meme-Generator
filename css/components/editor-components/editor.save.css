@@ -4,7 +4,7 @@
 	flex-direction: column;
 	gap: 10px;
 	height: 50px;
-	font-size: 1.5rem;
+	font-size: clamp(1vw, 1em, 5vw);
 	width: 100%;
 	justify-content: center;
 }

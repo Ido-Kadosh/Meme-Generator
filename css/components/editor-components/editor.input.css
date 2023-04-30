@@ -4,7 +4,7 @@
 	border-radius: 1.75rem;
 	border: none;
 	height: var(--m-editor-button-size);
-	font-size: var(--m-editor-font-size);
+	font-size: clamp(1vw, 1em, 3vw);
 	width: 80%;
 	padding-inline-start: 50px;
 	border: 1px 5px 0 #bbc4d1, inset 0 5px 0 #ffffff;
@@ -13,7 +13,6 @@
 @media screen and (min-width: 630px) {
 	.editor-tools input {
 		height: var(--l-editor-button-size);
-		font-size: var(--l-editor-font-size);
 	}
 }
 

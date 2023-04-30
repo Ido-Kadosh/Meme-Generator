@@ -45,3 +45,18 @@ canvas:focus {
 		width: auto;
 	}
 }
+
+.save-confirmation-modal {
+	position: absolute;
+	right: 10px;
+	padding: 2em 0.8em;
+	border-radius: 2em;
+	color: #ffffff;
+	background-color: var(--primary-color-2);
+	transform: translateX(120%);
+	transition: transform 0.4s;
+}
+
+.save-confirmation-modal.shown {
+	transform: translateX(0%);
+}

@@ -59,7 +59,7 @@ const gTrans = {
 	},
 	download: {
 		en: 'Download',
-		he: 'הורד',
+		he: 'הורדה',
 	},
 };
 

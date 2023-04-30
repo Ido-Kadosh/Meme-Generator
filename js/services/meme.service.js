@@ -33,7 +33,7 @@ let gImgs;
 let gMeme = {};
 let gCurrFont = 'impact';
 
-const gCreationPos = { x: 50, y: 50 };
+const gCreationPos = { x: 50, y: 0 };
 
 _setGImages();
 
@@ -184,6 +184,8 @@ function setSelectedLine(lineIdx) {
 }
 
 function _createLine({ txt = 'Add Text Here', size, align, strokeStyle, fillStyle }) {
+	gCreationPos.x += 50;
+	gCreationPos.y += 50;
 	return {
 		txt,
 		size,
@@ -197,7 +199,6 @@ function _createLine({ txt = 'Add Text Here', size, align, strokeStyle, fillStyl
 
 function addLine(txt) {
 	let line, lineValues;
-
 	if (gMeme.selectedLineIdx === -1) resetSelectedLine();
 	let selectedLine = getCurrLine(); //default values will be same as selected line
 	if (!selectedLine) {
@@ -244,6 +245,19 @@ function saveMeme(meme, img, annotatedImg) {
 	saveToStorage(G_IMAGES_STORAGE_KEY, gImgs);
 }
 
+function deleteSaved(idx) {
+	const memes = loadFromStorage(MEME_STORAGE_KEY) || [];
+	const imgs = loadFromStorage(IMG_STORAGE_KEY) || [];
+	const annotatedImgs = loadFromStorage(ANNOTATED_IMG_STORAGE_KEY) || [];
+	memes.splice(idx, 1);
+	imgs.splice(idx, 1);
+	annotatedImgs.splice(idx, 1);
+	saveToStorage(ANNOTATED_IMG_STORAGE_KEY, annotatedImgs);
+	saveToStorage(MEME_STORAGE_KEY, memes);
+	saveToStorage(IMG_STORAGE_KEY, imgs);
+	saveToStorage(G_IMAGES_STORAGE_KEY, gImgs);
+}
+
 function getLoadedMemes() {
 	return loadFromStorage(MEME_STORAGE_KEY) || [];
 }
@@ -257,6 +271,7 @@ function getLoadedAnnotatedImgs() {
 }
 
 function loadMeme(meme) {
+	// not sure a copy is necessary, but this works.
 	gMeme = {
 		selectedImgId: meme.selectedImgId,
 		selectedLineIdx: meme.selectedLineIdx,

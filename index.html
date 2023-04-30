@@ -32,11 +32,11 @@
 					<div class="input-icon-container">
 						<input list="meme-types" data-trans="search" type="text" class="search-meme-input" placeholder="Search" oninput="onSearchMeme(this.value)" />
 						<datalist id="meme-types">
+							<option value="Happy"></option>
+							<option value="Sad"></option>
+							<option value="Crazy"></option>
+							<option value="Sarcastic"></option>
 							<option value="Funny"></option>
-							<option value="Cat"></option>
-							<option value="Smart"></option>
-							<option value="Office"></option>
-							<option value="Microsoft Edge"></option>
 						  </datalist>
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</div>
@@ -72,7 +72,7 @@
 					</div>
 
 					<div class="font-editors-container">
-						<button class="btn-font" onclick="onUpdateLineSize(1)"><i class="fa-solid fa-font"></i> +</button>
+						<button class="btn-font" onclick="onUpdateLineSize(1)"><i class="fa-solid fa-font"></i> +</lab>
 						<button class="btn-font" onclick="onUpdateLineSize(-1)"><i class="fa-solid fa-font"></i> -</button>
 						<button class="btn-font" onclick="onSetAlignment('left')">
 							<i class="fa-solid fa-align-left"></i>
@@ -101,13 +101,13 @@
 					</div>
 				</section>
 			</main>
+			<div class="save-confirmation-modal">Saved meme successfully</div>
 		</section>
 
 		<section class="meme-saved-page hidden">
 			<main>
 				<section class="saved-memes-container"></section>
 			</main>
-
 		</section>
 		<script src="js/services/util.service.js"></script>
 		<script src="js/services/storage.service.js"></script>
